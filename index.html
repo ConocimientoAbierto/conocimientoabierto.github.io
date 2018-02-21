@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+  	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="keywords" content="key, words" />
+    <meta name="description" content="description" />
+
+  	<title>Fundacion Conocimiento Abierto</title>
+
+    <!-- Personal CSS -->
+    <link rel="stylesheet" href="css/main.css" type="text/css" />
+  </head>
+
+  <body>
+    <!-- Loading spinner -->
+    <!-- =============== -->
+    <div id="loading" class="sk-cube-grid center-div">
+      <div class="sk-cube sk-cube1"></div>
+      <div class="sk-cube sk-cube2"></div>
+      <div class="sk-cube sk-cube3"></div>
+      <div class="sk-cube sk-cube4"></div>
+      <div class="sk-cube sk-cube5"></div>
+      <div class="sk-cube sk-cube6"></div>
+      <div class="sk-cube sk-cube7"></div>
+      <div class="sk-cube sk-cube8"></div>
+      <div class="sk-cube sk-cube9"></div>
+    </div>
+
+    <!-- Menu navBar -->
+    <!-- =========== -->
+    <nav role="navigation">
+      <div id="menuToggle">
+        <input type="checkbox" id="navcheck" />
+
+        <!-- Spans to act as a tasty hamburger -->
+        <span></span>
+        <span></span>
+        <span></span>
+
+        <ul id="menu">
+          <a class="menuLink" href="#inicio" onclick="document.getElementById('navcheck').checked = false">
+            <li>Inicio</li>
+          </a>
+          <a class="menuLink" href="#equipo" onclick="document.getElementById('navcheck').checked = false">
+            <li>Equipo</li>
+          </a>
+          <a class="menuLink" href="#datos" onclick="document.getElementById('navcheck').checked = false">
+            <li>Datos</li>
+          </a>
+          <a class="menuLink" href="#gobierno_abierto" onclick="document.getElementById('navcheck').checked = false">
+            <li>Gobierno Abierto</li>
+          </a>
+          <a class="menuLink" href="#genero" onclick="document.getElementById('navcheck').checked = false">
+            <li>Genero</li>
+          </a>
+          <a class="menuLink" href="#comunidad_e_innovación" onclick="document.getElementById('navcheck').checked = false">
+            <li>Comunidad e Innovación</li>
+          </a>
+          <a class="menuLink" href="#tecnología_cívica" onclick="document.getElementById('navcheck').checked = false">
+            <li>Tecnología Cívica</li>
+          </a>
+        </ul><!--/#menu -->
+      </div><!--/#menuToggle -->
+    </nav>
+
+    <!-- Scroll arrow -->
+    <div class="arrow bounce hidden"></div>
+
+    <!-- Plot -->
+    <!-- ==== -->
+    <div id="container">
+      <div id="chart" class="hidden">
+        <!-- Legend -->
+        <div id="legend">
+           <div class="legend-line"> <p class="node-name"><span class="key-sqrt n-equipo"></span>Equipo</p> </div>
+           <div class="legend-line"> <p class="node-name"><span class="key-sqrt n-datos"></span>Datos</p> </div>
+           <div class="legend-line"> <p class="node-name"><span class="key-sqrt n-genero"></span>Genero</p> </div>
+           <div class="legend-line"> <p class="node-name"><span class="key-sqrt n-gob"></span>Gobierno Abierto</p> </div>
+           <div class="legend-line"> <p class="node-name"><span class="key-sqrt n-tecno"></span>Tecnología Cívica</p> </div>
+           <div class="legend-line"> <p class="node-name"><span class="key-sqrt n-comunidad"></span>Comunidad e innovación</p> </div>
+        </div>
+
+        <div id="banner" class="center-div fadeIn"></div>
+      </div><!--/#chart -->
+
+      <!-- Proyect information -->
+      <div id="proyectDescription" class="hidden">
+        <h2 class="proyectTitle"></h2>
+        <img class="proyectImg" src="" />
+        <div class="proyectContent">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vel est sit amet orci sagittis luctus eu vitae erat. Quisque feugiat eros elementum, tincidunt justo sit amet, sagittis eros. In tempus, ante in venenatis consequat, diam odio mattis arcu, et consequat felis elit sit amet ex. Ut eu lorem ante. Duis feugiat ultrices urna, vitae tincidunt ipsum egestas id. Suspendisse faucibus augue at felis ultricies vehicula. Nunc gravida orci eu magna imperdiet scelerisque. Pellentesque in nisi luctus, condimentum sapien vitae, tincidunt augue. Etiam pharetra congue augue, vel mattis massa auctor ut. Donec non sagittis tellus. Vivamus at nisl luctus, varius nisi vitae, aliquet purus. Pellentesque et auctor orci.
+          </p>
+          <p>
+            Quisque ultrices ante id urna euismod dictum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nulla facilisi. Donec risus ligula, auctor ac auctor at, laoreet in ante. Praesent maximus ex mi, non laoreet velit maximus ut. Praesent vel hendrerit sapien. Nam imperdiet neque eget tristique malesuada. Aliquam venenatis suscipit lobortis. Quisque mattis fringilla massa eu pretium. Nunc pharetra sed arcu vitae tempor. Suspendisse vitae dolor iaculis, ornare elit eu, posuere augue. Mauris diam purus, porttitor ac justo at, lacinia ullamcorper turpis. Phasellus at nisi eget odio laoreet faucibus. Donec ultricies risus ut placerat efficitur.
+          </p>
+        </div>
+      </div>
+
+      <!-- Scroll sterps -->
+      <div id='sections'>
+        <div class="step" id="inicio"></div>
+        <div class="step" id="no_se_que1"></div>
+        <div class="step" id="no_se_que2"></div>
+        <div class="step" id="equipo"></div>
+        <div class="step" id="datos"></div>
+        <div class="step" id="gobierno_abierto"></div>
+        <div class="step" id="genero"></div>
+        <div class="step" id="comunidad_e_innovación"></div>
+        <div class="step" id="tecnología_cívica"></div>
+      </div><!--/#sections -->
+    </div><!--/.container -->
+
+    <!-- Put all the script at the end -->
+    <!-- D3 JS -->
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="js/graph-scroll.js"></script>
+    <!-- Particle JS -->
+    <script src="js/particles.min.js"></script>
+    <!-- Main JS -->
+    <script src="js/main.js"></script>
+  </body>
+</html>
