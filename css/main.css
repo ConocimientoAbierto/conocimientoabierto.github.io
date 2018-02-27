@@ -41,17 +41,14 @@ body {
 .step {
   height: 500px;
 }
-/******************************************************
-	 svg and banner properties
-*******************************************************/
-/*
-#particles-js {
-	position: fixed;
-	top: 0;
-	bottom: 0;
-	left: 0;
-}
 
+#fake {
+	width: 1px;
+	height: 8000px;
+}
+/******************************************************
+	 Vvg style
+*******************************************************/
 /* Make the chart container fill the page using CSS. */
 #chart {
   position: absolute;
@@ -62,26 +59,67 @@ body {
   z-index: 100
 }
 
-#banner {
-	width: 765px;
-	height: 243px;
-	background-image: url("../img/logo.png");
-	-webkit-animation-duration: 3s;
-	animation-duration: 3s;
-  -webkit-animation-fill-mode: both;
-	animation-fill-mode: both;
-}
-
-#fake {
-	width: 1px;
-	height: 8000px;
-}
-
 svg {
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
+}
+/******************************************************
+	 Banner style
+*******************************************************/
+#banner {
+	width: 280px;
+	height: 88px;
+	background-image: url("../img/logo_xsmall.png");
+	-webkit-animation-duration: 3s;
+	animation-duration: 3s;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+	#banner {
+		width: 365px;
+		height: 116px;
+		background-image: url("../img/logo_small.png");
+		-webkit-animation-duration: 3s;
+		animation-duration: 3s;
+		-webkit-animation-fill-mode: both;
+		animation-fill-mode: both;
+	}
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+	#banner {
+		width: 565px;
+		height: 179px;
+		background-image: url("../img/logo_medium.png");
+		-webkit-animation-duration: 3s;
+		animation-duration: 3s;
+		-webkit-animation-fill-mode: both;
+		animation-fill-mode: both;
+	}
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+	#banner {
+		width: 765px;
+		height: 243px;
+		background-image: url("../img/logo.png");
+		-webkit-animation-duration: 3s;
+		animation-duration: 3s;
+	  -webkit-animation-fill-mode: both;
+		animation-fill-mode: both;
+	}
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+
 }
 /******************************************************
  Graph style
@@ -112,6 +150,12 @@ text {
 	position: fixed;
 	text-align: center;
 	width: 100%;
+}
+
+@media screen and (max-width: 575px) {
+    #legend {
+        display: none !important;
+    }
 }
 
 .legend-line {
