@@ -51,6 +51,7 @@ var simulation = d3.forceSimulation()
     .alphaMin(0.6)
     .on('end', function () {
       chart.classed('hidden', false)
+      d3.select('.arrow').classed('hidden', false)
       d3.select('#loading').classed('hidden', true)
 
       moveNodes(0, 3000)
@@ -359,9 +360,7 @@ function initScroll () {
     .container(d3.select('#container'))
     .sections(d3.selectAll('#sections > .step'))
     .on('active', function (i) {
-      currentStep = i
-
-      if (i === 2) {
+      if (i === 1) {
         // Show the banner
         d3.select('#banner').classed('fadeIn', true)
         d3.select('#banner').classed('fadeOut', false)
@@ -369,7 +368,7 @@ function initScroll () {
         d3.select('#proyectDescription').classed('fadeIn', false)
         d3.select('#proyectDescription').classed('fadeOut', true)
       }
-      else if (i > 2) {
+      else if (i > 1) {
         // Hidden the banner
         d3.select('#banner').classed('fadeIn', false)
         d3.select('#banner').classed('fadeOut', true)
@@ -381,35 +380,37 @@ function initScroll () {
 
       if (i === 0) {
         moveNodes(0, 1000)
-
-        d3.select('.arrow').classed('hidden', false)
       } else if (i === 1) {
         removehighlightArea()
-        moveNodes(1, 1000)
 
-        d3.select('.arrow').classed('hidden', true)
+        if (currentStep < i) {
+          moveNodes(1, 1000)
+          setTimeout(function () { moveNodes(2, 1000) }, 1000)
+        } else {
+          moveNodes(2, 1000)
+          setTimeout(function () { moveNodes(1, 1000) }, 1000)
+        }
       } else if (i === 2) {
-        removehighlightArea()
-        moveNodes(2, 1000)
-      } else if (i === 3) {
         moveNodes(3, 1000)
         highlightArea('Equipo')
-      } else if (i === 4) {
+      } else if (i === 3) {
         moveNodes(4, 1000)
         highlightArea('Datos')
-      } else if (i === 5) {
+      } else if (i === 4) {
         moveNodes(5, 1000)
         highlightArea('Gobierno Abierto')
-      } else if (i === 6) {
+      } else if (i === 5) {
         moveNodes(6, 1000)
         highlightArea('Genero')
-      } else if (i === 7) {
+      } else if (i === 6) {
         moveNodes(7, 1000)
         highlightArea('Comunidad e innovación')
-      } else if (i === 8) {
+      } else if (i === 7) {
         moveNodes(8, 1000)
         highlightArea('Tecnología Cívica')
       }
+
+      currentStep = i
     })
 }
 
