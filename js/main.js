@@ -1,11 +1,15 @@
+var currentStep = 0
 var chart = d3.select('#chart')
-
-// Extract the width and height that was computed by CSS.
 var margin = {top: 30, right: 30, bottom: 30, left: 30}
-var chartSize = {width: window.innerWidth, height: window.innerHeight}
-var svgSize = {width: chartSize.width - margin.left - margin.right,
-  height: chartSize.height - margin.top - margin.bottom}
-var logoSize = {width: 765, height: 243}
+
+// SVG and banner variables
+var banner = document.getElementById('banner')
+var chartSize
+var svgSize
+var logoSize
+
+// Calculate the svg and banner size
+setSizes()
 
 // Use the extracted size to set the size of an SVG element
 var svg = chart
@@ -355,6 +359,8 @@ function initScroll () {
     .container(d3.select('#container'))
     .sections(d3.selectAll('#sections > .step'))
     .on('active', function (i) {
+      currentStep = i
+
       if (i === 2) {
         // Show the banner
         d3.select('#banner').classed('fadeIn', true)
@@ -410,4 +416,46 @@ function initScroll () {
 /* particlesJS.load(@dom-id, @path-json, @callback (optional)) */
 particlesJS.load('chart', '../data/particles.json', function () {
   console.log('particles.js loaded - callback')
+})
+
+/*******************************************************************
+ Resize functions
+ ================
+*******************************************************************/
+function setSizes () {
+  /*
+    Set SVG size
+  */
+
+  // Extract the width and height that was computed by CSS.
+  chartSize = {width: window.innerWidth, height: window.innerHeight}
+  svgSize = {width: chartSize.width - margin.left - margin.right,
+    height: chartSize.height - margin.top - margin.bottom}
+
+  // Logo size
+  logoSize = {width: banner.offsetWidth, height: banner.offsetHeight}
+}
+
+window.addEventListener('resize', function () {
+  /*
+    Redraw based on the new size whenever the browser window is resized.
+  */
+
+  // Hidden chart
+  chart.classed('hidden', true)
+  d3.select('#loading').classed('hidden', false)
+
+  // Update svg size
+  setSizes()
+  d3.select('svg')
+    .attr('width', svgSize.width + margin.left + margin.right)
+    .attr('height', svgSize.height + margin.top + margin.bottom)
+
+  // Calculate new postions and update
+  calulateStepPostitions()
+  moveNodes(currentStep)
+
+  // SHow chart
+  chart.classed('hidden', false)
+  d3.select('#loading').classed('hidden', true)
 })
