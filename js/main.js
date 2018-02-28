@@ -99,6 +99,9 @@ d3.json('data/graph.json', function (error, graphData) {
       .attr('x', function (d) { return d.step0.x })
       .attr('y', function (d) { return d.step0.y })
       .text(function (d) { return d.id })
+      .call(wrap, 100)
+
+  // .text(function (d) { wrap(d.id, 50) })
 
   simulation
       .nodes(graph.nodes)
@@ -143,6 +146,15 @@ function ticked (time) {
         return d.x + r + 10
       })
       .attr('y', function (d) { return d.y + 5 })
+      .each(function (d, i) {
+        var x = d.x + (typeof d.r === 'undefined' ? 0 : d.r) + 10
+        var y = d.y + 5
+        d3.select(this).selectAll('tspan')
+          .transition()
+          .duration(time)
+          .attr('x', x)
+          .attr('y', y)
+      })
 }
 
 function moveNodes (stepNumber, timeAnimation) {
@@ -159,6 +171,35 @@ function moveNodes (stepNumber, timeAnimation) {
   ticked(timeAnimation)
 }
 
+function wrap (text, width) {
+  /*
+    Function stiller to Mike. Ty!
+    https://bl.ocks.org/mbostock/7555321
+  */
+  text.each(function () {
+    var text = d3.select(this)
+    var words = text.text().split(/\s+/).reverse()
+    var word
+    var line = []
+    var lineNumber = 0
+    var lineHeight = 1.1 // ems
+    var y = text.attr('y')
+    var x = text.attr('x')
+    var dy = 0 // parseFloat(text.attr("dy")),
+    var tspan = text.text(null).append('tspan').attr('x', x).attr('y', y).attr('dy', dy + 'em')
+
+    while (word = words.pop()) {
+      line.push(word)
+      tspan.text(line.join(' '))
+      if (tspan.node().getComputedTextLength() > width) {
+        line.pop()
+        tspan.text(line.join(' '))
+        line = [word]
+        tspan = text.append('tspan').attr('x', x).attr('y', y).attr('dy', ++lineNumber * lineHeight + dy + 'em').text(word)
+      }
+    }
+  })
+}
 /*******************************************************************
   Nodes hover in/out
   ==================
