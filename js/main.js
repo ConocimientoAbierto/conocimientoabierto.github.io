@@ -1,23 +1,15 @@
-var currentStep = 0
-var chart = d3.select('#chart')
-var margin = {top: 30, right: 30, bottom: 30, left: 30}
-
 // SVG and banner variables
+var chart = d3.select('#chart')
 var banner = document.getElementById('banner')
 var chartSize
 var svgSize
 var logoSize
+var margin
+var svg
 
-// Calculate the svg and banner size
-setSizes()
-
-// Use the extracted size to set the size of an SVG element
-var svg = chart
-  .append('svg')
-    .attr('width', svgSize.width + margin.left + margin.right)
-    .attr('height', svgSize.height + margin.top + margin.bottom)
-  .append('g')
-    .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+//
+var currentStep = 0
+var breakPoint = 576
 
 // Graph variables
 var graph
@@ -28,37 +20,46 @@ var linkedByIndex = { }
 var nodesOrden = [ 'Equipo', 'Datos', 'Gobierno Abierto', 'Genero', 'Comunidad e innovación', 'Tecnología Cívica' ]
 
 // Proyect description html
-var proyectDivTitle = document.getElementsByClassName('proyectTitle')[ 0 ]
-var proyectDivContent = document.getElementsByClassName('proyectContent')[ 0 ]
-var proyectDivImg = document.getElementsByClassName('proyectImg')[ 0 ]
+var divDescription = document.getElementById('proyectDescription')
+var divDescriptionSmall = document.getElementById('proyectDescriptionSmall')
+
+// Append SVG ans set the correct size
+svg = chart
+  .append('svg')
+    .attr('width', 0)
+    .attr('height', 0)
+  .append('g')
+    .attr('transform', 'translate(0,0)')
+
+updateSvgSize()
 
 // Nodes colors
 function getColor (d) {
   return d === 'Datos' ? '#377eb8'
+         : d === 'Equipo' ? '#a65628'
          : d === 'Genero' ? '#4daf4a'
          : d === 'Gobierno Abierto' ? '#984ea3'
          : d === 'Tecnología Cívica' ? '#ff7f00'
          : d === 'Comunidad e innovación' ? '#ffff33'
-         : d === 'Equipo' ? '#a65628'
          : '#ffffff'
 }
 
-// Initialize the simulation
+// Create the force simulation
 var simulation = d3.forceSimulation()
     .force('charge', d3.forceManyBody())
     .force('center', d3.forceCenter(svgSize.width / 2, svgSize.height / 2))
     .force('link', d3.forceLink().id(function (d) { return d.id }))
     .alphaMin(0.6)
     .on('end', function () {
+      // Show the chart and hide the loading spinner
       chart.classed('hidden', false)
       d3.select('.arrow').classed('hidden', false)
       d3.select('#loading').classed('hidden', true)
 
-      moveNodes(0, 3000)
       initScroll()
     })
 
-// Load data and createt the graph
+// Load data and create the graph
 d3.json('data/graph.json', function (error, graphData) {
   if (error) throw error
 
@@ -71,7 +72,6 @@ d3.json('data/graph.json', function (error, graphData) {
     .selectAll('line')
     .data(graph.links)
     .enter().append('line')
-      .attr('stroke-width', function (d) { return Math.sqrt(d.value) })
 
   // Add the nodes
   node = svg.append('g')
@@ -83,6 +83,12 @@ d3.json('data/graph.json', function (error, graphData) {
       .attr('fill', function (d) { return getColor(d.area) })
       .on('mouseover', mouseOver)
       .on('mouseout', mouseOut)
+      .on('click', function (d) {
+        if (d.id === d.area) {
+          var hash = '#' + d.id.toLowerCase().replace(/ /g, '_')
+          window.location.hash = hash
+        }
+      })
 
   // Add the text
   text = svg.append('g')
@@ -108,10 +114,13 @@ d3.json('data/graph.json', function (error, graphData) {
 })
 
 /*******************************************************************
-  Update positions with transition
-  ================================
+  Update positions and translate function
+  =======================================
 *******************************************************************/
 function ticked (time) {
+  /*
+    Update nodes, links and text positions
+  */
   time = (typeof time === 'undefined' ? 0 : time)
 
   node.transition()
@@ -137,6 +146,9 @@ function ticked (time) {
 }
 
 function moveNodes (stepNumber, timeAnimation) {
+  /*
+    Move the nodes
+  */
   graph.nodes.forEach(function (d) {
     var key = 'step' + String(stepNumber)
     d.x = d[ key ].x
@@ -148,14 +160,14 @@ function moveNodes (stepNumber, timeAnimation) {
 }
 
 /*******************************************************************
-  Hover in/out over some node
-  ===========================
+  Nodes hover in/out
+  ==================
 *******************************************************************/
 function mouseOver (d) {
   /*
-  Mouse hover over node
+    On mouse hover in over node, highlight link, nodes and
+    text connectedd to the node.
   */
-  // Resalto las conexiones del nodo
   link
     .transition(500)
       .style('stroke-opacity', function (o) {
@@ -173,29 +185,45 @@ function mouseOver (d) {
       .style('opacity', function (o) {
         return isConnected(o, d) ? 1.0 : 0
       })
+}
 
-  // Update .proyect description
-  proyectDivTitle.innerHTML = d.id
-  //proyectDivContent.innerHTML = '<p>spam</p>'
-  proyectDivImg.src = d.img
+function mouseOver2 (d) {
+  /*
+    On mouse hover in over node, update proyect description div
+  */
+  // Big description
+  divDescription.getElementsByTagName('h2')[0].innerHTML = d.id
+  // proyectDivContent.innerHTML = '<p>spam</p>'
+  divDescription.getElementsByTagName('img')[0].src = d.img
+
+  // Small description
+  divDescriptionSmall.getElementsByTagName('h2')[0].innerHTML = d.id
+  // proyectDivContent.innerHTML = '<p>spam</p>'
 }
 
 function mouseOut (d) {
-
+  /*
+    On mouse hover out over node, do ...
+  */
 }
 
 function isConnected (a, b) {
-  // Return true if two nodes are connected
+  /*
+    Return true if two nodes are connected
+  */
   return linkedByIndex[a.index + ',' + b.index] ||
          linkedByIndex[b.index + ',' + a.index] ||
          a.index === b.index
 }
 
 /*******************************************************************
-  Nodes, links styles
-  ===================
+  Highlight areas, nodes
+  ======================
 *******************************************************************/
 function highlightArea (area) {
+  /*
+
+  */
   var d = graph.nodes.filter(function (d) {
     return d.id === area
   })[0]
@@ -218,12 +246,34 @@ function highlightArea (area) {
         return d.area === area ? 1 : 0
       })
 
-  proyectDivTitle.innerHTML = d.id
-  //proyectDivContent.innerHTML = '<p>spam</p>'
-  proyectDivImg.src = d.img
+  divDescription.getElementsByTagName('h2')[0].innerHTML = d.id
+  // proyectDivContent.innerHTML = '<p>spam</p>'
+  divDescription.getElementsByTagName('img')[0].src = d.img
 }
 
-function removehighlightArea () {
+function highlightNode (nodeId) {
+  /*
+
+  */
+  var d = graph.nodes.filter(function (d) {
+    return d.id === nodeId
+  })[0]
+
+  node
+    .transition(1000)
+      .style('opacity', function (d) {
+        return d.id === nodeId ? 1 : 0.2
+      })
+
+  // Small description
+  divDescriptionSmall.getElementsByTagName('h2')[0].innerHTML = d.id
+  // proyectDivContent.innerHTML = '<p>spam</p>'
+}
+
+function removeHighlightArea () {
+  /*
+
+  */
   link
     .transition(1000)
       .style('stroke-opacity', 1)
@@ -246,6 +296,7 @@ function calulateStepPostitions () {
   graph.nodes.forEach(function (d) {
     d.fx = svgSize.width / 2
     d.fy = svgSize.height / 2
+    d.step_1 = {x: svgSize.width / 2, y: svgSize.height / 2, r: 0}
   })
 
   // Calculate nodes position step0
@@ -322,7 +373,6 @@ function createNodesInitialPosition () {
 
 function area0 () {
   // the 35 is a "padding-top" for the legend
-
   var x = Math.random() * (svgSize.width - logoSize.width) / 2
   var y = Math.random() * (svgSize.height - 35) + 35
   return {x: x, y: y}
@@ -336,6 +386,7 @@ function area1 () {
 }
 
 function area2 () {
+  // the 35 is a "padding-top" for the legend
   var x = logoSize.width + (svgSize.width - logoSize.width) / 2 +
           Math.random() * (svgSize.width - logoSize.width) / 2
   var y = Math.random() * (svgSize.height - 35) + 35
@@ -360,61 +411,125 @@ function initScroll () {
     .container(d3.select('#container'))
     .sections(d3.selectAll('#sections > .step'))
     .on('active', function (i) {
-      if (i === 1) {
-        // Show the banner
-        d3.select('#banner').classed('fadeIn', true)
-        d3.select('#banner').classed('fadeOut', false)
-        // Hidden proyect description
-        d3.select('#proyectDescription').classed('fadeIn', false)
-        d3.select('#proyectDescription').classed('fadeOut', true)
-      }
-      else if (i > 1) {
-        // Hidden the banner
-        d3.select('#banner').classed('fadeIn', false)
-        d3.select('#banner').classed('fadeOut', true)
-        // Show proyect description
-        d3.select('#proyectDescription').classed('hidden', false)
-        d3.select('#proyectDescription').classed('fadeIn', true)
-        d3.select('#proyectDescription').classed('fadeOut', false)
-      }
-
-      if (i === 0) {
-        moveNodes(0, 1000)
-      } else if (i === 1) {
-        removehighlightArea()
-
-        if (currentStep < i) {
-          moveNodes(1, 1000)
-          setTimeout(function () { moveNodes(2, 1000) }, 1000)
-        } else {
-          moveNodes(2, 1000)
-          setTimeout(function () { moveNodes(1, 1000) }, 1000)
-        }
-      } else if (i === 2) {
-        moveNodes(3, 1000)
-        highlightArea('Equipo')
-      } else if (i === 3) {
-        moveNodes(4, 1000)
-        highlightArea('Datos')
-      } else if (i === 4) {
-        moveNodes(5, 1000)
-        highlightArea('Gobierno Abierto')
-      } else if (i === 5) {
-        moveNodes(6, 1000)
-        highlightArea('Genero')
-      } else if (i === 6) {
-        moveNodes(7, 1000)
-        highlightArea('Comunidad e innovación')
-      } else if (i === 7) {
-        moveNodes(8, 1000)
-        highlightArea('Tecnología Cívica')
-      }
+      //
+      actionScroll(i)
 
       currentStep = i
     })
 }
 
-/* particlesJS.load(@dom-id, @path-json, @callback (optional)) */
+function actionScroll (i) {
+  //
+  removeHighlightArea()
+
+  if (i <= 1) {
+    // Show the banner
+    d3.select('#banner').classed('fadeIn', true)
+    d3.select('#banner').classed('fadeOut', false)
+
+    d3.select('#proyectDescription').classed('hidden', true)
+    d3.select('#proyectDescriptionSmall').classed('hidden', true)
+  } else if (i > 1) {
+    // Hidden the banner
+    d3.select('#banner').classed('fadeIn', false)
+    d3.select('#banner').classed('fadeOut', true)
+  }
+
+  // Update mouse hover over node
+  if (i !== 0) {
+    node.on('mouseover', mouseOver2)
+  } else {
+    node.on('mouseover', mouseOver)
+  }
+
+  //
+  if (window.innerWidth > breakPoint) {
+    actionsBigWindows(i)
+  } else {
+    actionsSmallWindows(i)
+  }
+}
+
+function actionsSmallWindows (i) {
+  if (i <= 1) {
+    // Hidden proyect description
+    d3.select('#proyectDescriptionSmall').classed('fadeIn', false)
+    d3.select('#proyectDescriptionSmall').classed('fadeOut', true)
+  } else if (i > 1) {
+    // Show proyect description
+    d3.select('#proyectDescriptionSmall').classed('hidden', false)
+    d3.select('#proyectDescriptionSmall').classed('fadeIn', true)
+    d3.select('#proyectDescriptionSmall').classed('fadeOut', false)
+  }
+
+  if (i === 0) {
+    moveNodes('_1', 1000)
+  } else if (i === 1) {
+    moveNodes(2, 1000)
+  } else if (i === 2) {
+    moveNodes(2, 1000)
+    highlightNode('Equipo')
+  } else if (i === 3) {
+    moveNodes(2, 1000)
+    highlightNode('Datos')
+  } else if (i === 4) {
+    moveNodes(2, 1000)
+    highlightNode('Gobierno Abierto')
+  } else if (i === 5) {
+    moveNodes(2, 1000)
+    highlightNode('Genero')
+  } else if (i === 6) {
+    moveNodes(2, 1000)
+    highlightNode('Comunidad e innovación')
+  } else if (i === 7) {
+    moveNodes(2, 1000)
+    highlightNode('Tecnología Cívica')
+  }
+}
+
+function actionsBigWindows (i) {
+  if (i <= 1) {
+    // Hidden proyect description
+    d3.select('#proyectDescription').classed('fadeIn', false)
+    d3.select('#proyectDescription').classed('fadeOut', true)
+  } else if (i > 1) {
+    // Show proyect description
+    d3.select('#proyectDescription').classed('hidden', false)
+    d3.select('#proyectDescription').classed('fadeIn', true)
+    d3.select('#proyectDescription').classed('fadeOut', false)
+  }
+
+  if (i === 0) {
+    moveNodes(0, 1000)
+  } else if (i === 1) {
+    if (currentStep < i) {
+      moveNodes(1, 1000)
+      setTimeout(function () { moveNodes(2, 1000) }, 1000)
+    } else if (currentStep > i) {
+      moveNodes(2, 1000)
+      setTimeout(function () { moveNodes(1, 1000) }, 1000)
+    }
+  } else if (i === 2) {
+    moveNodes(3, 1000)
+    highlightArea('Equipo')
+  } else if (i === 3) {
+    moveNodes(4, 1000)
+    highlightArea('Datos')
+  } else if (i === 4) {
+    moveNodes(5, 1000)
+    highlightArea('Gobierno Abierto')
+  } else if (i === 5) {
+    moveNodes(6, 1000)
+    highlightArea('Genero')
+  } else if (i === 6) {
+    moveNodes(7, 1000)
+    highlightArea('Comunidad e innovación')
+  } else if (i === 7) {
+    moveNodes(8, 1000)
+    highlightArea('Tecnología Cívica')
+  }
+}
+
 particlesJS.load('chart', '../data/particles.json', function () {
   console.log('particles.js loaded - callback')
 })
@@ -423,38 +538,60 @@ particlesJS.load('chart', '../data/particles.json', function () {
  Resize functions
  ================
 *******************************************************************/
-function setSizes () {
+function updateSvgSize () {
   /*
-    Set SVG size
+    Set SVG size based on window size
   */
-
-  // Extract the width and height that was computed by CSS.
+  // Extract window width and height
   chartSize = {width: window.innerWidth, height: window.innerHeight}
+
+  // Set margin depending the window size
+  if (window.innerWidth > breakPoint) {
+    margin = {top: 30, right: 30, bottom: 30, left: 30}
+  } else {
+    margin = {top: 20, right: 0, bottom: 0, left: 0}
+  }
+
+  // SVG and logo size
   svgSize = {width: chartSize.width - margin.left - margin.right,
     height: chartSize.height - margin.top - margin.bottom}
-
-  // Logo size
   logoSize = {width: banner.offsetWidth, height: banner.offsetHeight}
+
+  d3.select('svg')
+    .attr('width', svgSize.width + margin.left + margin.right)
+    .attr('height', svgSize.height + margin.top + margin.bottom)
+  svg.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
 }
 
 window.addEventListener('resize', function () {
   /*
     Redraw based on the new size whenever the browser window is resized.
   */
-
   // Hidden chart
   chart.classed('hidden', true)
   d3.select('#loading').classed('hidden', false)
 
   // Update svg size
-  setSizes()
-  d3.select('svg')
-    .attr('width', svgSize.width + margin.left + margin.right)
-    .attr('height', svgSize.height + margin.top + margin.bottom)
+  updateSvgSize()
+
+  d3.select('#proyectDescription').classed('hidden', true)
+  d3.select('#proyectDescriptionSmall').classed('hidden', true)
+
+  // Remove highlight
+  removeHighlightArea()
 
   // Calculate new postions and update
   calulateStepPostitions()
-  moveNodes(currentStep)
+
+  // Move the nodes
+  /*
+  if (window.innerWidth > breakPoint) {
+    actionsBigWindows(currentStep)
+  } else {
+    actionsSmallWindows(currentStep)
+  }
+  */
+  actionScroll(currentStep)
 
   // SHow chart
   chart.classed('hidden', false)
