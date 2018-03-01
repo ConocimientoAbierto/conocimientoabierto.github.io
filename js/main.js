@@ -28,6 +28,7 @@ svg = chart
   .append('svg')
     .attr('width', 0)
     .attr('height', 0)
+    .on('mousedown', function () { removeHighlightArea() })
   .append('g')
     .attr('transform', 'translate(0,0)')
 
@@ -53,9 +54,9 @@ var simulation = d3.forceSimulation()
     .on('end', function () {
       // Show the chart and hide the loading spinner
       chart.classed('hidden', false)
-      d3.select('.arrow').classed('hidden', false)
       d3.select('#loading').classed('hidden', true)
 
+      // Start the scroll events
       initScroll()
     })
 
@@ -175,6 +176,8 @@ function wrap (text, width) {
   /*
     Function stiller to Mike. Ty!
     https://bl.ocks.org/mbostock/7555321
+
+    Break lonf text in multiples lines
   */
   text.each(function () {
     var text = d3.select(this)
@@ -468,6 +471,7 @@ function actionScroll (i) {
     d3.select('#banner').classed('fadeIn', true)
     d3.select('#banner').classed('fadeOut', false)
 
+    // Hidden the proyect description html
     d3.select('#proyectDescription').classed('hidden', true)
     d3.select('#proyectDescriptionSmall').classed('hidden', true)
   } else if (i > 1) {
@@ -483,7 +487,7 @@ function actionScroll (i) {
     node.on('mouseover', mouseOver)
   }
 
-  //
+  // Actions depending the window size
   if (window.innerWidth > breakPoint) {
     actionsBigWindows(i)
   } else {
@@ -492,6 +496,10 @@ function actionScroll (i) {
 }
 
 function actionsSmallWindows (i) {
+  // Hidden startButton and show arrow
+  d3.select('.startButton').classed('hidden', true)
+  d3.select('.arrow').classed('hidden', false)
+
   if (i <= 1) {
     // Hidden proyect description
     d3.select('#proyectDescriptionSmall').classed('fadeIn', false)
@@ -529,6 +537,16 @@ function actionsSmallWindows (i) {
 }
 
 function actionsBigWindows (i) {
+  if (i === 0) {
+    // Only show startButton
+    d3.select('.arrow').classed('hidden', true)
+    d3.select('.startButton').classed('hidden', false)
+  } else if (i > 0) {
+    // Only show arrow
+    d3.select('.arrow').classed('hidden', false)
+    d3.select('.startButton').classed('hidden', true)
+  }
+
   if (i <= 1) {
     // Hidden proyect description
     d3.select('#proyectDescription').classed('fadeIn', false)
@@ -541,7 +559,7 @@ function actionsBigWindows (i) {
   }
 
   if (i === 0) {
-    moveNodes(0, 1000)
+    moveNodes('_1', 1000)
   } else if (i === 1) {
     if (currentStep < i) {
       moveNodes(1, 1000)
@@ -569,6 +587,12 @@ function actionsBigWindows (i) {
     moveNodes(8, 1000)
     highlightArea('Tecnología Cívica')
   }
+}
+
+function start () {
+  d3.select('.arrow').classed('hidden', false)
+  d3.select('.startButton').classed('hidden', true)
+  moveNodes(0, 1000)
 }
 
 particlesJS.load('chart', '../data/particles.json', function () {
@@ -638,3 +662,43 @@ window.addEventListener('resize', function () {
   chart.classed('hidden', false)
   d3.select('#loading').classed('hidden', true)
 })
+
+/*******************************************************************
+
+ ================
+*******************************************************************/
+document.getElementsByName('equipoButton')[0].addEventListener('mouseover', function () {
+  if (currentStep === 0 && d3.select('.startButton').classed('hidden')) {
+    highlightArea('Equipo')
+  }
+}, false)
+
+document.getElementsByName('datosButton')[0].addEventListener('mouseover', function () {
+  if (currentStep === 0 && d3.select('.startButton').classed('hidden')) {
+    highlightArea('Datos')
+  }
+}, false)
+
+document.getElementsByName('generoButton')[0].addEventListener('mouseover', function () {
+  if (currentStep === 0 && d3.select('.startButton').classed('hidden')) {
+    highlightArea('Genero')
+  }
+}, false)
+
+document.getElementsByName('gaButton')[0].addEventListener('mouseover', function () {
+  if (currentStep === 0 && d3.select('.startButton').classed('hidden')) {
+    highlightArea('Gobierno Abierto')
+  }
+}, false)
+
+document.getElementsByName('tcButton')[0].addEventListener('mouseover', function () {
+  if (currentStep === 0 && d3.select('.startButton').classed('hidden')) {
+    highlightArea('Tecnología Cívica')
+  }
+}, false)
+
+document.getElementsByName('ciButton')[0].addEventListener('mouseover', function () {
+  if (currentStep === 0 && d3.select('.startButton').classed('hidden')) {
+    highlightArea('Comunidad e innovación')
+  }
+}, false)

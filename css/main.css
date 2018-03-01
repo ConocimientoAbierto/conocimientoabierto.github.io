@@ -46,6 +46,18 @@ body {
 	width: 1px;
 	height: 8000px;
 }
+
+/******************************************************
+
+*******************************************************/
+.startButton {
+	position: fixed;
+	bottom: 20px;
+	left: 40%;
+	color: white;
+	z-index: 1000;
+	cursor: pointer;
+}
 /******************************************************
 	 Vvg style
 *******************************************************/
@@ -149,12 +161,20 @@ text {
 	position: fixed;
 	text-align: center;
 	width: 100%;
+	z-index: 1000;
 }
 
 @media screen and (max-width: 575px) {
     #legend {
         display: none !important;
     }
+}
+
+#legend a,
+#legend a:active,
+#legend a:hover {
+	color: white;
+	text-decoration: none;
 }
 
 .legend-line {

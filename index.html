@@ -40,33 +40,37 @@
         <span></span>
 
         <ul id="menu">
-          <a class="menuLink" href="#inicio" onclick="document.getElementById('navcheck').checked = false">
+          <a class="menuLink" href="#inicio"
+              onclick="document.getElementById('navcheck').checked = false">
             <li>Inicio</li>
           </a>
-          <a class="menuLink" href="#equipo" onclick="document.getElementById('navcheck').checked = false">
+          <a class="menuLink" href="#equipo"
+              onclick="document.getElementById('navcheck').checked = false">
             <li>Equipo</li>
           </a>
-          <a class="menuLink" href="#datos" onclick="document.getElementById('navcheck').checked = false">
+          <a class="menuLink" href="#datos"
+              onclick="document.getElementById('navcheck').checked = false">
             <li>Datos</li>
           </a>
-          <a class="menuLink" href="#gobierno_abierto" onclick="document.getElementById('navcheck').checked = false">
+          <a class="menuLink" href="#gobierno_abierto"
+              onclick="document.getElementById('navcheck').checked = false">
             <li>Gobierno Abierto</li>
           </a>
-          <a class="menuLink" href="#genero" onclick="document.getElementById('navcheck').checked = false">
+          <a class="menuLink" href="#genero"
+              onclick="document.getElementById('navcheck').checked = false">
             <li>Genero</li>
           </a>
-          <a class="menuLink" href="#comunidad_e_innovación" onclick="document.getElementById('navcheck').checked = false">
+          <a class="menuLink" href="#comunidad_e_innovación"
+              onclick="document.getElementById('navcheck').checked = false">
             <li>Comunidad e Innovación</li>
           </a>
-          <a class="menuLink" href="#tecnología_cívica" onclick="document.getElementById('navcheck').checked = false">
+          <a class="menuLink" href="#tecnología_cívica"
+              onclick="document.getElementById('navcheck').checked = false">
             <li>Tecnología Cívica</li>
           </a>
         </ul><!--/#menu -->
       </div><!--/#menuToggle -->
     </nav>
-
-    <!-- Scroll arrow -->
-    <div class="arrow bounce hidden"></div>
 
     <!-- Plot -->
     <!-- ==== -->
@@ -74,12 +78,36 @@
       <div id="chart" class="hidden">
         <!-- Legend -->
         <div id="legend">
-           <div class="legend-line"> <p class="node-name"><span class="key-sqrt n-equipo"></span>Equipo</p> </div>
-           <div class="legend-line"> <p class="node-name"><span class="key-sqrt n-datos"></span>Datos</p> </div>
-           <div class="legend-line"> <p class="node-name"><span class="key-sqrt n-genero"></span>Genero</p> </div>
-           <div class="legend-line"> <p class="node-name"><span class="key-sqrt n-gob"></span>Gobierno Abierto</p> </div>
-           <div class="legend-line"> <p class="node-name"><span class="key-sqrt n-tecno"></span>Tecnología Cívica</p> </div>
-           <div class="legend-line"> <p class="node-name"><span class="key-sqrt n-comunidad"></span>Comunidad e innovación</p> </div>
+           <div class="legend-line">
+             <a href="#equipo" name="equipoButton">
+               <p class="node-name"><span class="key-sqrt n-equipo"></span>Equipo</p>
+             </a>
+           </div>
+           <div class="legend-line">
+             <a href="#datos" name="datosButton">
+               <p class="node-name"><span class="key-sqrt n-datos"></span>Datos</p>
+             </a>
+           </div>
+           <div class="legend-line">
+             <a href="#genero" name="generoButton">
+               <p class="node-name"><span class="key-sqrt n-genero"></span>Genero</p>
+             </a>
+           </div>
+           <div class="legend-line">
+             <a href="#gobierno_abierto" name="gaButton">
+               <p class="node-name"><span class="key-sqrt n-gob"></span>Gobierno Abierto</p>
+             </a>
+           </div>
+           <div class="legend-line">
+             <a href="#tecnología_cívica" name="tcButton">
+               <p class="node-name"><span class="key-sqrt n-tecno"></span>Tecnología Cívica</p>
+             </a>
+           </div>
+           <div class="legend-line">
+             <a href="#comunidad_e_innovación" name="ciButton">
+               <p class="node-name"><span class="key-sqrt n-comunidad"></span>Comunidad e innovación</p>
+             </a>
+          </div>
         </div>
 
         <div id="banner" class="center-div fadeIn"></div>
@@ -121,6 +149,16 @@
         <div class="step" id="tecnología_cívica"></div>
       </div><!--/#sections -->
     </div><!--/.container -->
+
+    <!-- Start button -->
+    <div class="startButton bounce hidden" onclick="start()">
+      <p>
+        Hace click para comenzar y<br />posicionate sobre cada nodo.
+      </p>
+    </div>
+
+    <!-- Scroll arrow -->
+    <div class="arrow bounce hidden"></div>
 
     <!-- Put all the script at the end -->
     <!-- D3 JS -->
