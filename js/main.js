@@ -237,12 +237,12 @@ function mouseOver2 (d) {
   */
   // Big description
   divDescription.getElementsByTagName('h2')[0].innerHTML = d.id
-  // proyectDivContent.innerHTML = '<p>spam</p>'
+  divDescription.getElementsByTagName('div')[0].innerHTML = '<p>' + d.description + '</p>'
   divDescription.getElementsByTagName('img')[0].src = d.img
 
   // Small description
   divDescriptionSmall.getElementsByTagName('h2')[0].innerHTML = d.id
-  // proyectDivContent.innerHTML = '<p>spam</p>'
+  divDescriptionSmall.getElementsByTagName('div')[0].innerHTML = '<p>' + d.description + '</p>'
 }
 
 function mouseOut (d) {
