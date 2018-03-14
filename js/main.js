@@ -17,7 +17,8 @@ var link
 var node
 var text
 var linkedByIndex = { }
-var nodesOrden = [ 'Equipo', 'Datos', 'Gobierno Abierto', 'Genero', 'Comunidad e innovación', 'Tecnología Cívica' ]
+var nodesOrden = [ 'Equipo', 'Datos', 'Gobierno Abierto',
+  'Comunidad e innovación', 'Tecnología Cívica y Género' ]
 
 // Proyect description html
 var divDescription = document.getElementById('proyectDescription')
@@ -38,9 +39,8 @@ updateSvgSize()
 function getColor (d) {
   return d === 'Datos' ? '#377eb8'
          : d === 'Equipo' ? '#a65628'
-         : d === 'Genero' ? '#4daf4a'
          : d === 'Gobierno Abierto' ? '#984ea3'
-         : d === 'Tecnología Cívica' ? '#ff7f00'
+         : d === 'Tecnología Cívica y Género' ? '#ff7f00'
          : d === 'Comunidad e innovación' ? '#ffff33'
          : '#ffffff'
 }
@@ -291,7 +291,7 @@ function highlightArea (area) {
       })
 
   divDescription.getElementsByTagName('h2')[0].innerHTML = d.id
-  // proyectDivContent.innerHTML = '<p>spam</p>'
+  divDescription.getElementsByTagName('div')[0].innerHTML = '<p>' + d.description + '</p>'
   divDescription.getElementsByTagName('img')[0].src = d.img
 }
 
@@ -311,7 +311,7 @@ function highlightNode (nodeId) {
 
   // Small description
   divDescriptionSmall.getElementsByTagName('h2')[0].innerHTML = d.id
-  // proyectDivContent.innerHTML = '<p>spam</p>'
+  divDescriptionSmall.getElementsByTagName('div')[0].innerHTML = '<p>' + d.description + '</p>'
 }
 
 function removeHighlightArea () {
@@ -367,7 +367,7 @@ function calulateStepPostitions () {
   graph.nodes.forEach(function (d) {
     var offset = nodesOrden.indexOf(d.area) + 1
     var r = (d.area === d.id ? 20 : 0)
-    d.step2 = {x: 40, y: svgSize.height / 7 * offset, r: r}
+    d.step2 = {x: 40, y: svgSize.height / (nodesOrden.length + 1) * offset, r: r}
   })
 
   // Calculate nodes positions from step3 to step8
@@ -526,13 +526,10 @@ function actionsSmallWindows (i) {
     highlightNode('Gobierno Abierto')
   } else if (i === 5) {
     moveNodes(2, 1000)
-    highlightNode('Genero')
+    highlightNode('Comunidad e innovación')
   } else if (i === 6) {
     moveNodes(2, 1000)
-    highlightNode('Comunidad e innovación')
-  } else if (i === 7) {
-    moveNodes(2, 1000)
-    highlightNode('Tecnología Cívica')
+    highlightNode('Tecnología Cívica y Género')
   }
 }
 
@@ -579,13 +576,10 @@ function actionsBigWindows (i) {
     highlightArea('Gobierno Abierto')
   } else if (i === 5) {
     moveNodes(6, 1000)
-    highlightArea('Genero')
+    highlightArea('Comunidad e innovación')
   } else if (i === 6) {
     moveNodes(7, 1000)
-    highlightArea('Comunidad e innovación')
-  } else if (i === 7) {
-    moveNodes(8, 1000)
-    highlightArea('Tecnología Cívica')
+    highlightArea('Tecnología Cívica y Género')
   }
 }
 
@@ -679,12 +673,6 @@ document.getElementsByName('datosButton')[0].addEventListener('mouseover', funct
   }
 }, false)
 
-document.getElementsByName('generoButton')[0].addEventListener('mouseover', function () {
-  if (currentStep === 0 && d3.select('.startButton').classed('hidden')) {
-    highlightArea('Genero')
-  }
-}, false)
-
 document.getElementsByName('gaButton')[0].addEventListener('mouseover', function () {
   if (currentStep === 0 && d3.select('.startButton').classed('hidden')) {
     highlightArea('Gobierno Abierto')
@@ -693,7 +681,7 @@ document.getElementsByName('gaButton')[0].addEventListener('mouseover', function
 
 document.getElementsByName('tcButton')[0].addEventListener('mouseover', function () {
   if (currentStep === 0 && d3.select('.startButton').classed('hidden')) {
-    highlightArea('Tecnología Cívica')
+    highlightArea('Tecnología Cívica y Género')
   }
 }, false)
 
