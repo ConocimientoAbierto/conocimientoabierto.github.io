@@ -3,8 +3,57 @@
 *******************************************************/
 body {
 	margin: 0;
-	font-family: arial, sans;
+	font-family: 'Inconsolata', monospace;
 	background-color: #292935;
+}
+
+h1{
+  font-family: 'Hind', sans-serif;
+  color:#fff;
+  font-weight: 500;
+  font-size: 64px;
+  line-height: 1.2;
+}
+
+h2{
+
+  font-family: 'Hind', sans-serif;
+  font-weight: 500;
+  font-size: 36px;
+
+}
+h3{
+  font-family: 'Inconsolata', monospace;
+  color:#fff;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1.5;
+}
+
+#logoupper {
+	position:fixed;
+	left:0;
+	top:0;
+	width: 200px;
+	margin: 10px 50px;
+	z-index: 1000;
+}
+
+.proyectContent {
+  font-family: 'Inconsolata', monospace;
+  font-weight: 400;
+  color:#D3D3D3;
+  line-height: 1.5;
+}
+
+.proyectContent a {
+  color:#6CF6FB;
+  text-decoration: none;
+}
+
+#bluehighlight {
+	color:#6CF6FB;
+	font-weight: 700;
 }
 
 .center-div {
@@ -59,7 +108,7 @@ body {
 	cursor: pointer;
 }
 /******************************************************
-	 Vvg style
+	 SVG style
 *******************************************************/
 /* Make the chart container fill the page using CSS. */
 #chart {
@@ -83,7 +132,7 @@ svg {
 #banner {
 	width: 280px;
 	height: 88px;
-	background-image: url("../img/logo_xsmall.png");
+	z-index: 5;
 	-webkit-animation-duration: 3s;
 	animation-duration: 3s;
 	-webkit-animation-fill-mode: both;
@@ -95,7 +144,6 @@ svg {
 	#banner {
 		width: 365px;
 		height: 116px;
-		background-image: url("../img/logo_small.png");
 		-webkit-animation-duration: 3s;
 		animation-duration: 3s;
 		-webkit-animation-fill-mode: both;
@@ -108,7 +156,6 @@ svg {
 	#banner {
 		width: 565px;
 		height: 179px;
-		background-image: url("../img/logo_medium.png");
 		-webkit-animation-duration: 3s;
 		animation-duration: 3s;
 		-webkit-animation-fill-mode: both;
@@ -121,7 +168,6 @@ svg {
 	#banner {
 		width: 765px;
 		height: 243px;
-		background-image: url("../img/logo.png");
 		-webkit-animation-duration: 3s;
 		animation-duration: 3s;
 	  -webkit-animation-fill-mode: both;
@@ -160,6 +206,9 @@ text {
 	font-weight: bold;
 	position: fixed;
 	text-align: center;
+	text-transform: uppercase;
+  font-family: 'Inconsolata', monospace;
+  font-weight: 400;
 	width: 100%;
 	z-index: 1000;
 }
@@ -171,10 +220,15 @@ text {
 }
 
 #legend a,
-#legend a:active,
-#legend a:hover {
+#legend a:active {
 	color: white;
+  font-weight: 400;
 	text-decoration: none;
+  border-bottom: 2px solid #ffffff;
+}
+
+#legend a:hover {
+  color: white;
 }
 
 .legend-line {
@@ -186,6 +240,12 @@ text {
   margin: 0 !important;
 }
 
+.node-name:hover {
+  margin: 0 !important;
+  border-bottom: 1px solid #fff;
+  padding-bottom: 5px;
+}
+
 .key-sqrt {
   display: inline-block;
 	border-radius: 50%;
@@ -195,16 +255,16 @@ text {
 }
 
 /* colors */
-.n-datos { background: #377eb8;}
-.n-genero { background: #4daf4a;}
-.n-gob { background: #984ea3;}
-.n-tecno { background: #ff7f00;}
-.n-comunidad { background: #ffff33;}
-.n-equipo { background: #a65628;}
+.n-datos { background: #5EC76C;}
+.n-gob { background: #F17F30}
+.n-tecno { background: #E74530;}
+.n-comunidad { background: #E9FB6C;}
+.n-equipo { background: #6CF6FB;}
 /******************************************************
  Proyect description
 *******************************************************/
 #proyectDescription {
+	font-family: 'Hind', sans-serif;
 	position: fixed;
   right: 50px;
   top: 100px;
@@ -214,22 +274,23 @@ text {
 	animation-duration: 3s;
   -webkit-animation-fill-mode: both;
 	animation-fill-mode: both;
+	margin: 20px;
+  padding: 10px 50px 50px 50px;
 }
 
-#proyectDescriptionSmall {
-	position: fixed;
-  right: 50px;
-  top: 25px;
-	color: #fff;
-	width: 60%;
-	-webkit-animation-duration: 3s;
-	animation-duration: 3s;
-  -webkit-animation-fill-mode: both;
-	animation-fill-mode: both;
-}
+@media screen and (max-width: 575px) {
+	#proyectDescription {
+		top: 25px;
+		width: 60%;
+	}
 
-#proyectDescriptionSmall h2 {
-	margin-top: 0px;
+	#proyectDescription h2 {
+		margin-top: 0px;
+	}
+
+	.proyectImg {
+		display: none;
+	}
 }
 
 .proyectImg {
@@ -325,7 +386,7 @@ nav {
 }
 
 .menuLink:hover {
-  color: tomato;
+  color: #6CF6FB;
 }
 
 #menuToggle {

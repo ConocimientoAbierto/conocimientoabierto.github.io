@@ -22,9 +22,8 @@ var nodesOrden = [ 'Equipo', 'Datos', 'Gobierno Abierto',
 
 // Proyect description html
 var divDescription = document.getElementById('proyectDescription')
-var divDescriptionSmall = document.getElementById('proyectDescriptionSmall')
 
-// Append SVG ans set the correct size
+// Append SVG
 svg = chart
   .append('svg')
     .attr('width', 0)
@@ -33,15 +32,16 @@ svg = chart
   .append('g')
     .attr('transform', 'translate(0,0)')
 
+// Set SVG size
 updateSvgSize()
 
 // Nodes colors
 function getColor (d) {
-  return d === 'Datos' ? '#377eb8'
-         : d === 'Equipo' ? '#a65628'
-         : d === 'Gobierno Abierto' ? '#984ea3'
-         : d === 'Tecnología Cívica y Género' ? '#ff7f00'
-         : d === 'Comunidad e innovación' ? '#ffff33'
+  return d === 'Datos' ? '#5EC76C'
+         : d === 'Equipo' ? '#6CF6FB'
+         : d === 'Gobierno Abierto' ? '#F17F30'
+         : d === 'Tecnología Cívica y Género' ? '#E74530'
+         : d === 'Comunidad e innovación' ? '#E9FB6C'
          : '#ffffff'
 }
 
@@ -83,7 +83,6 @@ d3.json('data/graph.json', function (error, graphData) {
       .attr('r', 7)
       .attr('fill', function (d) { return getColor(d.area) })
       .on('mouseover', mouseOver)
-      .on('mouseout', mouseOut)
       .on('click', function (d) {
         if (d.id === d.area) {
           var hash = '#' + d.id.toLowerCase().replace(/ /g, '_')
@@ -101,8 +100,6 @@ d3.json('data/graph.json', function (error, graphData) {
       .attr('y', function (d) { return d.step0.y })
       .text(function (d) { return d.id })
       .call(wrap, 100)
-
-  // .text(function (d) { wrap(d.id, 50) })
 
   simulation
       .nodes(graph.nodes)
@@ -235,20 +232,9 @@ function mouseOver2 (d) {
   /*
     On mouse hover in over node, update proyect description div
   */
-  // Big description
   divDescription.getElementsByTagName('h2')[0].innerHTML = d.id
   divDescription.getElementsByTagName('div')[0].innerHTML = '<p>' + d.description + '</p>'
   divDescription.getElementsByTagName('img')[0].src = d.img
-
-  // Small description
-  divDescriptionSmall.getElementsByTagName('h2')[0].innerHTML = d.id
-  divDescriptionSmall.getElementsByTagName('div')[0].innerHTML = '<p>' + d.description + '</p>'
-}
-
-function mouseOut (d) {
-  /*
-    On mouse hover out over node, do ...
-  */
 }
 
 function isConnected (a, b) {
@@ -309,9 +295,9 @@ function highlightNode (nodeId) {
         return d.id === nodeId ? 1 : 0.2
       })
 
-  // Small description
-  divDescriptionSmall.getElementsByTagName('h2')[0].innerHTML = d.id
-  divDescriptionSmall.getElementsByTagName('div')[0].innerHTML = '<p>' + d.description + '</p>'
+  divDescription.getElementsByTagName('h2')[0].innerHTML = d.id
+  divDescription.getElementsByTagName('div')[0].innerHTML = '<p>' + d.description + '</p>'
+  divDescription.getElementsByTagName('img')[0].src = d.img
 }
 
 function removeHighlightArea () {
@@ -470,14 +456,22 @@ function actionScroll (i) {
     // Show the banner
     d3.select('#banner').classed('fadeIn', true)
     d3.select('#banner').classed('fadeOut', false)
-
-    // Hidden the proyect description html
-    d3.select('#proyectDescription').classed('hidden', true)
-    d3.select('#proyectDescriptionSmall').classed('hidden', true)
   } else if (i > 1) {
     // Hidden the banner
     d3.select('#banner').classed('fadeIn', false)
     d3.select('#banner').classed('fadeOut', true)
+  }
+
+  if (i <= 1) {
+    // Hidden proyect description
+    d3.select('#proyectDescription').classed('hidden', true)
+    d3.select('#proyectDescription').classed('fadeIn', false)
+    d3.select('#proyectDescription').classed('fadeOut', true)
+  } else if (i > 1) {
+    // Show proyect description
+    d3.select('#proyectDescription').classed('hidden', false)
+    d3.select('#proyectDescription').classed('fadeIn', true)
+    d3.select('#proyectDescription').classed('fadeOut', false)
   }
 
   // Update mouse hover over node
@@ -499,17 +493,6 @@ function actionsSmallWindows (i) {
   // Hidden startButton and show arrow
   d3.select('.startButton').classed('hidden', true)
   d3.select('.arrow').classed('hidden', false)
-
-  if (i <= 1) {
-    // Hidden proyect description
-    d3.select('#proyectDescriptionSmall').classed('fadeIn', false)
-    d3.select('#proyectDescriptionSmall').classed('fadeOut', true)
-  } else if (i > 1) {
-    // Show proyect description
-    d3.select('#proyectDescriptionSmall').classed('hidden', false)
-    d3.select('#proyectDescriptionSmall').classed('fadeIn', true)
-    d3.select('#proyectDescriptionSmall').classed('fadeOut', false)
-  }
 
   if (i === 0) {
     moveNodes('_1', 1000)
@@ -542,17 +525,6 @@ function actionsBigWindows (i) {
     // Only show arrow
     d3.select('.arrow').classed('hidden', false)
     d3.select('.startButton').classed('hidden', true)
-  }
-
-  if (i <= 1) {
-    // Hidden proyect description
-    d3.select('#proyectDescription').classed('fadeIn', false)
-    d3.select('#proyectDescription').classed('fadeOut', true)
-  } else if (i > 1) {
-    // Show proyect description
-    d3.select('#proyectDescription').classed('hidden', false)
-    d3.select('#proyectDescription').classed('fadeIn', true)
-    d3.select('#proyectDescription').classed('fadeOut', false)
   }
 
   if (i === 0) {
@@ -634,7 +606,6 @@ window.addEventListener('resize', function () {
   updateSvgSize()
 
   d3.select('#proyectDescription').classed('hidden', true)
-  d3.select('#proyectDescriptionSmall').classed('hidden', true)
 
   // Remove highlight
   removeHighlightArea()
@@ -643,13 +614,6 @@ window.addEventListener('resize', function () {
   calulateStepPostitions()
 
   // Move the nodes
-  /*
-  if (window.innerWidth > breakPoint) {
-    actionsBigWindows(currentStep)
-  } else {
-    actionsSmallWindows(currentStep)
-  }
-  */
   actionScroll(currentStep)
 
   // SHow chart
