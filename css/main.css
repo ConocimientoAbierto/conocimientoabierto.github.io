@@ -367,6 +367,7 @@ text {
 nav {
 	position: fixed;
 	z-index: 1000;
+	right: 20px;
 }
 
 .menuLink {
@@ -393,7 +394,7 @@ nav {
   display: block;
   position: relative;
   top: 25px;
-  left: 25px;
+  left: 0px;
   z-index: 1;
   -webkit-user-select: none;
   user-select: none;
@@ -402,7 +403,6 @@ nav {
 @media (min-width: 576px) {
 	#menuToggle {
 		top: 50px;
-		left: 53px;
 	}
 }
 
@@ -488,6 +488,7 @@ nav {
   transform-origin: 0% 0%;
   transform: translate(-100%, 0);
   transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+	margin-left: -95%;
 }
 
 #menu::before {
