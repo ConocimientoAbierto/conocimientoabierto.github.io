@@ -472,6 +472,12 @@ function actionScroll (i) {
     d3.select('#proyectDescription').classed('fadeOut', false)
   }
 
+  if (i <= 6) {
+    d3.select('#divContacto').classed('hidden', true)
+  } else if (i > 6) {
+    d3.select('#divContacto').classed('hidden', false)
+  }
+
   // Update mouse hover over node
   if (i !== 0) {
     node.on('mouseover', mouseOver2)
@@ -511,6 +517,8 @@ function actionsSmallWindows (i) {
   } else if (i === 6) {
     moveNodes(2, 1000)
     highlightNode('Tecnología Cívica y Género')
+  } else if (i === 7) {
+    moveNodes(2, 1000)
   }
 }
 
@@ -550,6 +558,8 @@ function actionsBigWindows (i) {
   } else if (i === 6) {
     moveNodes(7, 1000)
     highlightArea('Tecnología Cívica y Género')
+  } else if (i === 7) {
+    moveNodes(2, 1000)
   }
 }
 
