@@ -99,7 +99,7 @@ d3.json('data/graph.json', function (error, graphData) {
       .attr('x', function (d) { return d.step0.x })
       .attr('y', function (d) { return d.step0.y })
       .text(function (d) { return d.id })
-      .call(wrap, 100)
+      .call(wrap, 150)
 
   simulation
       .nodes(graph.nodes)
@@ -232,9 +232,7 @@ function mouseOver2 (d) {
   /*
     On mouse hover in over node, update proyect description div
   */
-  divDescription.getElementsByTagName('h2')[0].innerHTML = d.id
-  divDescription.getElementsByTagName('div')[0].innerHTML = '<p>' + d.description + '</p>'
-  divDescription.getElementsByTagName('img')[0].src = d.img
+  updateDescription(d)
 }
 
 function isConnected (a, b) {
@@ -276,9 +274,7 @@ function highlightArea (area) {
         return d.area === area ? 1 : 0
       })
 
-  divDescription.getElementsByTagName('h2')[0].innerHTML = d.id
-  divDescription.getElementsByTagName('div')[0].innerHTML = '<p>' + d.description + '</p>'
-  divDescription.getElementsByTagName('img')[0].src = d.img
+  updateDescription(d)
 }
 
 function highlightNode (nodeId) {
@@ -295,9 +291,7 @@ function highlightNode (nodeId) {
         return d.id === nodeId ? 1 : 0.2
       })
 
-  divDescription.getElementsByTagName('h2')[0].innerHTML = d.id
-  divDescription.getElementsByTagName('div')[0].innerHTML = '<p>' + d.description + '</p>'
-  divDescription.getElementsByTagName('img')[0].src = d.img
+  updateDescription(d)
 }
 
 function removeHighlightArea () {
@@ -315,6 +309,12 @@ function removeHighlightArea () {
   text
     .transition(1000)
       .style('opacity', 0)
+}
+
+function updateDescription (d) {
+  divDescription.getElementsByTagName('h2')[0].innerHTML = d.id
+  divDescription.getElementsByTagName('div')[0].innerHTML = '<p>' + d.description + '</p>'
+  divDescription.getElementsByTagName('img')[0].src = d.img
 }
 
 /*******************************************************************
@@ -464,12 +464,10 @@ function actionScroll (i) {
 
   if (i <= 1) {
     // Hidden proyect description
-    d3.select('#proyectDescription').classed('hidden', true)
     d3.select('#proyectDescription').classed('fadeIn', false)
     d3.select('#proyectDescription').classed('fadeOut', true)
   } else if (i > 1) {
     // Show proyect description
-    d3.select('#proyectDescription').classed('hidden', false)
     d3.select('#proyectDescription').classed('fadeIn', true)
     d3.select('#proyectDescription').classed('fadeOut', false)
   }
@@ -598,14 +596,8 @@ window.addEventListener('resize', function () {
   /*
     Redraw based on the new size whenever the browser window is resized.
   */
-  // Hidden chart
-  chart.classed('hidden', true)
-  d3.select('#loading').classed('hidden', false)
-
   // Update svg size
   updateSvgSize()
-
-  d3.select('#proyectDescription').classed('hidden', true)
 
   // Remove highlight
   removeHighlightArea()
@@ -615,10 +607,6 @@ window.addEventListener('resize', function () {
 
   // Move the nodes
   actionScroll(currentStep)
-
-  // SHow chart
-  chart.classed('hidden', false)
-  d3.select('#loading').classed('hidden', true)
 })
 
 /*******************************************************************
