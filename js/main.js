@@ -331,8 +331,10 @@ function calulateStepPostitions () {
 
   // Calculate nodes position step0
   graph.nodes.forEach(function (d) {
-    var position = createNodesInitialPosition()
-    d.step0 = {x: position.x, y: position.y, r: 7}
+    // the 35 is a "padding-top" for the legend
+    var x = Math.random() * svgSize.width
+    var y = Math.random() * (svgSize.height - 35) + 35
+    d.step0 = {x: x, y: y, r: 7}
   })
 
   // Calculate nodes position step1
@@ -377,59 +379,6 @@ function calulateStepPostitions () {
     }
   }
 }
-
-/*******************************************************************
-  Generate random initial nodes positions
-  =======================================
-
-  **********************************
-  *        *    Area 1    *        *
-  *        ****************        *
-  * Area 0 *     LOGO     * Area 2 *
-  *        ****************        *
-  *        *   Area 3     *        *
-  **********************************
-
-*******************************************************************/
-function createNodesInitialPosition () {
-  // Random int number [0, 4)
-  var choise = Math.floor(Math.random() * 4)
-
-  return choise === 0 ? area0()
-       : choise === 1 ? area1()
-       : choise === 2 ? area2()
-       : area3()
-}
-
-function area0 () {
-  // the 35 is a "padding-top" for the legend
-  var x = Math.random() * (svgSize.width - logoSize.width) / 2
-  var y = Math.random() * (svgSize.height - 35) + 35
-  return {x: x, y: y}
-}
-
-function area1 () {
-  // the 35 is a "padding-top" for the legend
-  var x = (svgSize.width - logoSize.width) / 2 + Math.random() * logoSize.width
-  var y = Math.random() * ((svgSize.height - logoSize.height) / 2 - 35) + 35
-  return {x: x, y: y}
-}
-
-function area2 () {
-  // the 35 is a "padding-top" for the legend
-  var x = logoSize.width + (svgSize.width - logoSize.width) / 2 +
-          Math.random() * (svgSize.width - logoSize.width) / 2
-  var y = Math.random() * (svgSize.height - 35) + 35
-  return {x: x, y: y}
-}
-
-function area3 () {
-  var x = (svgSize.width - logoSize.width) / 2 + Math.random() * logoSize.width
-  var y = logoSize.height + (svgSize.height - logoSize.height) / 2 +
-          Math.random() * (svgSize.height - logoSize.height) / 2
-  return {x: x, y: y}
-}
-
 /*******************************************************************
  Scroll events
  =============
@@ -452,14 +401,24 @@ function actionScroll (i) {
   //
   removeHighlightArea()
 
-  if (i <= 1) {
+  if (i < 1) {
     // Show the banner
     d3.select('#banner').classed('fadeIn', true)
     d3.select('#banner').classed('fadeOut', false)
-  } else if (i > 1) {
+  } else if (i >= 1) {
     // Hidden the banner
     d3.select('#banner').classed('fadeIn', false)
     d3.select('#banner').classed('fadeOut', true)
+  }
+
+  if (i == 1) {
+    // hidden
+    d3.select('#description').classed('fadeIn', true)
+    d3.select('#description').classed('fadeOut', false)
+  } else {
+    // Hidden the banner
+    d3.select('#description').classed('fadeIn', false)
+    d3.select('#description').classed('fadeOut', true)
   }
 
   if (i <= 1) {
@@ -570,6 +529,11 @@ function actionsBigWindows (i) {
 function start () {
   d3.select('.arrow').classed('hidden', false)
   d3.select('.startButton').classed('hidden', true)
+
+  //
+  d3.select('#banner').classed('fadeIn', false)
+  d3.select('#banner').classed('fadeOut', true)
+
   moveNodes(0, 1000)
 }
 
@@ -598,7 +562,9 @@ function updateSvgSize () {
   // SVG and logo size
   svgSize = {width: chartSize.width - margin.left - margin.right,
     height: chartSize.height - margin.top - margin.bottom}
-  logoSize = {width: banner.offsetWidth, height: banner.offsetHeight}
+
+  //logoSize = {width: banner.offsetWidth, height: banner.offsetHeight}
+  logoSize = {width: 100, height: 100}
 
   d3.select('svg')
     .attr('width', svgSize.width + margin.left + margin.right)

@@ -397,33 +397,32 @@ text {
 /******************************************************
 	 Banner
 *******************************************************/
-#banner {
+.text-container {
 	z-index: 5;
 	width: 280px;
-	height: 88px;
+	display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
-	#banner {
+	.text-container {
 		width: 365px;
-		height: 116px;
 	}
 }
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
-	#banner {
+	.text-container {
 		width: 565px;
-		height: 179px;
 	}
 }
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
-	#banner {
+	.text-container {
 		width: 765px;
-		height: 243px;
 	}
 }
 
