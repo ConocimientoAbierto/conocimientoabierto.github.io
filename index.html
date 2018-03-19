@@ -105,55 +105,60 @@
       </div><!--/#menuToggle -->
     </nav>
 
-    <!-- Plot -->
-    <!-- ==== -->
-    <div id="container">
-      <div id="chart" class="hidden">
-        <!-- Legend -->
-        <div id="legend">
-           <div class="legend-line">
-             <a href="#equipo" name="equipoButton">
-               <p class="node-name"><span class="key-sqrt n-equipo"></span>Equipo</p>
-             </a>
-           </div>
-           <div class="legend-line">
-             <a href="#datos" name="datosButton">
-               <p class="node-name"><span class="key-sqrt n-datos"></span>Datos</p>
-             </a>
-           </div>
-           <div class="legend-line">
-             <a href="#gobierno_abierto" name="gaButton">
-               <p class="node-name"><span class="key-sqrt n-gob"></span>Gobierno Abierto</p>
-             </a>
-           </div>
-           <div class="legend-line">
-             <a href="#comunidad_e_innovación" name="ciButton">
-               <p class="node-name"><span class="key-sqrt n-comunidad"></span>Comunidad e innovación</p>
-             </a>
-          </div>
-           <div class="legend-line">
-             <a href="#tecnología_cívica" name="tcButton">
-               <p class="node-name"><span class="key-sqrt n-tecno"></span>Tecnología Cívica y Género</p>
-             </a>
-           </div>
-        </div>
+    <div id="container" class="hidden">
 
-        <div id="banner" class="center-div fadeIn">
-          <h1>Diseñamos estrategias, investigaciones y mecanismos para
-            escalar hacia un <span id="bluehighlight">gobierno abierto.</span></h1>
-          </div>
+      <!-- Plot -->
+      <div id="chart">
       </div><!--/#chart -->
 
-      <!-- Proyect information -->
-      <div id="proyectDescription">
+      <!-- Legend -->
+      <div id="legend">
+         <div class="legend-line">
+           <a href="#equipo" name="equipoButton">
+             <p class="node-name"><span class="key-sqrt n-equipo"></span>Equipo</p>
+           </a>
+         </div>
+         <div class="legend-line">
+           <a href="#datos" name="datosButton">
+             <p class="node-name"><span class="key-sqrt n-datos"></span>Datos</p>
+           </a>
+         </div>
+         <div class="legend-line">
+           <a href="#gobierno_abierto" name="gaButton">
+             <p class="node-name"><span class="key-sqrt n-gob"></span>Gobierno Abierto</p>
+           </a>
+         </div>
+         <div class="legend-line">
+           <a href="#comunidad_e_innovación" name="ciButton">
+             <p class="node-name"><span class="key-sqrt n-comunidad"></span>Comunidad e innovación</p>
+           </a>
+        </div>
+         <div class="legend-line">
+           <a href="#tecnología_cívica" name="tcButton">
+             <p class="node-name"><span class="key-sqrt n-tecno"></span>Tecnología Cívica y Género</p>
+           </a>
+         </div>
+      </div><!--/#legend -->
+
+      <!-- Banner -->
+      <div id="banner" class="center-div animated2s fadeIn">
+        <h1>
+          Diseñamos estrategias, investigaciones y mecanismos para
+          escalar hacia un <span id="bluehighlight">gobierno abierto.</span>
+        </h1>
+      </div><!--/#banner -->
+
+      <!-- Proyect description -->
+      <div id="proyectDescription" class="animated2s">
         <h2 class="proyectTitle"></h2>
         <img class="proyectImg" src="" />
         <div class="proyectContent"></div>
-      </div>
+      </div><!--/proyectDescription -->
 
-      <div id="divContacto" class="hidden">
+      <!-- Footer -->
+      <div id="divContacto" class="animated slideOutDown">
         <h2>Spam</h2>
-      </div>
+      </div><!--/divContacto -->
 
       <!-- Scroll sterps -->
       <div id='sections'>
@@ -166,17 +171,17 @@
         <div class="step" id="tecnología_cívica"></div>
         <div class="step" id="contacto"></div>
       </div><!--/#sections -->
+
+      <!-- Start button -->
+      <div class="startButton animated2s infinite bounce hidden" onclick="start()">
+        <p>Hace click para comenzar y<br />posicionate sobre cada nodo.</p>
+      </div>
+
+      <!-- Scroll arrow -->
+      <div class="arrow animated2s infinite bounce hidden">
+      </div>
+
     </div><!--/.container -->
-
-    <!-- Start button -->
-    <div class="startButton bounce hidden" onclick="start()">
-      <p>
-        Hace click para comenzar y<br />posicionate sobre cada nodo.
-      </p>
-    </div>
-
-    <!-- Scroll arrow -->
-    <div class="arrow bounce hidden"></div>
 
     <!-- Put all the script at the end -->
     <!-- D3 JS -->

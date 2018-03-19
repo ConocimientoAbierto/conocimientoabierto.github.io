@@ -8,7 +8,7 @@ var margin
 var svg
 
 //
-var currentStep = 0
+var currentStep = -1
 var breakPoint = 576
 
 // Graph variables
@@ -52,8 +52,8 @@ var simulation = d3.forceSimulation()
     .force('link', d3.forceLink().id(function (d) { return d.id }))
     .alphaMin(0.6)
     .on('end', function () {
-      // Show the chart and hide the loading spinner
-      chart.classed('hidden', false)
+      // Show the container and hide the loading spinner
+      d3.select('#container').classed('hidden', false)
       d3.select('#loading').classed('hidden', true)
 
       // Start the scroll events
@@ -473,9 +473,13 @@ function actionScroll (i) {
   }
 
   if (i <= 6) {
-    d3.select('#divContacto').classed('hidden', true)
+    // Hidden footer section
+    d3.select('#divContacto').classed('slideInUp', false)
+    d3.select('#divContacto').classed('slideOutDown', true)
   } else if (i > 6) {
-    d3.select('#divContacto').classed('hidden', false)
+    // Show footer section
+    d3.select('#divContacto').classed('slideInUp', true)
+    d3.select('#divContacto').classed('slideOutDown', false)
   }
 
   // Update mouse hover over node
