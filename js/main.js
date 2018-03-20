@@ -21,7 +21,7 @@ var nodesOrden = [ 'Equipo', 'Datos', 'Gobierno Abierto',
   'Comunidad e innovación', 'Tecnología Cívica y Género' ]
 
 // Proyect description html
-var divDescription = document.getElementById('proyectDescription')
+var divDescription = document.getElementById('proyect-description')
 
 // Append SVG
 svg = chart
@@ -413,32 +413,32 @@ function actionScroll (i) {
 
   if (i == 1) {
     // hidden
-    d3.select('#description').classed('fadeIn', true)
-    d3.select('#description').classed('fadeOut', false)
+    d3.select('#about-us').classed('fadeIn', true)
+    d3.select('#about-us').classed('fadeOut', false)
   } else {
     // Hidden the banner
-    d3.select('#description').classed('fadeIn', false)
-    d3.select('#description').classed('fadeOut', true)
+    d3.select('#about-us').classed('fadeIn', false)
+    d3.select('#about-us').classed('fadeOut', true)
   }
 
   if (i <= 1) {
     // Hidden proyect description
-    d3.select('#proyectDescription').classed('fadeIn', false)
-    d3.select('#proyectDescription').classed('fadeOut', true)
+    d3.select('#proyect-description').classed('fadeIn', false)
+    d3.select('#proyect-description').classed('fadeOut', true)
   } else if (i > 1) {
     // Show proyect description
-    d3.select('#proyectDescription').classed('fadeIn', true)
-    d3.select('#proyectDescription').classed('fadeOut', false)
+    d3.select('#proyect-description').classed('fadeIn', true)
+    d3.select('#proyect-description').classed('fadeOut', false)
   }
 
   if (i <= 6) {
     // Hidden footer section
-    d3.select('#divContacto').classed('slideInUp', false)
-    d3.select('#divContacto').classed('slideOutDown', true)
+    d3.select('#contact').classed('slideInUp', false)
+    d3.select('#contact').classed('slideOutDown', true)
   } else if (i > 6) {
     // Show footer section
-    d3.select('#divContacto').classed('slideInUp', true)
-    d3.select('#divContacto').classed('slideOutDown', false)
+    d3.select('#contact').classed('slideInUp', true)
+    d3.select('#contact').classed('slideOutDown', false)
   }
 
   // Update mouse hover over node

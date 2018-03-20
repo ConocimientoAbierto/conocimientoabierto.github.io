@@ -29,6 +29,18 @@ h3{
   line-height: 1.5;
 }
 
+@media screen and (max-width: 575px) {
+	h1 {
+		font-size: 50px;
+	}
+}
+
+@media screen and (max-width: 340px) {
+	h1 {
+		font-size: 40px;
+	}
+}
+
 .center-div {
 	margin: auto;
 	position: fixed;
@@ -117,7 +129,7 @@ h3{
 /******************************************************
  Logo
 *******************************************************/
-#logoupper {
+.logo {
 	position: fixed;
 	right: 0;
 	bottom: 0;
@@ -125,6 +137,17 @@ h3{
 	margin: 10px 50px;
 	z-index: 1000;
 }
+
+@media screen and (max-width: 576px) {
+	.logo {
+		top: 0;
+		left: 0;
+		right: unset;
+		bottom: unset;
+		margin-left: 20px;
+	}
+}
+
 /******************************************************
  NavBar
 *******************************************************/
@@ -397,8 +420,20 @@ text {
 /******************************************************
 	 Banner
 *******************************************************/
+#banner {
+
+}
+
+@media screen and (max-width: 576px) {
+	#banner {
+		left: 0;
+		width: 100%;
+	}
+}
+
 .text-container {
 	z-index: 5;
+	left: 60px;
 	width: 280px;
 	display: flex;
   justify-content: center;
@@ -406,28 +441,28 @@ text {
 }
 
 /* Small devices (landscape phones, 576px and up) */
-@media (min-width: 576px) {
+@media screen and  (min-width: 576px) {
 	.text-container {
-		width: 365px;
+		width: 500px;
 	}
 }
 
 /* Medium devices (tablets, 768px and up) */
-@media (min-width: 768px) {
+@media screen and (min-width: 768px) {
 	.text-container {
 		width: 565px;
 	}
 }
 
 /* Large devices (desktops, 992px and up) */
-@media (min-width: 992px) {
+@media screen and (min-width: 992px) {
 	.text-container {
 		width: 765px;
 	}
 }
 
 /* Extra large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) {
+@media screen and (min-width: 1200px) {
 
 }
 
@@ -438,30 +473,15 @@ text {
 /******************************************************
  Proyect description
 *******************************************************/
-#proyectDescription {
+#proyect-description {
 	font-family: 'Hind', sans-serif;
 	position: fixed;
 	margin: 20px;
-  padding: 10px 50px 50px 50px;
+  padding: 0;
   right: 50px;
-  top: 100px;
+  top: 13%;
 	width: 33%;
 	color: #fff;
-}
-
-@media screen and (max-width: 575px) {
-	#proyectDescription {
-		top: 25px;
-		width: 60%;
-	}
-
-	#proyectDescription h2 {
-		margin-top: 0px;
-	}
-
-	.proyectImg {
-		display: none;
-	}
 }
 
 .proyectImg {
@@ -493,10 +513,45 @@ text {
   color:#6CF6FB;
   text-decoration: none;
 }
+
+@media screen and (max-width: 992px) {
+	#proyect-description {
+		right: 0;
+	}
+
+	.proyectImg {
+		width: 150px;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	#proyect-description {
+		right: 0;
+	}
+
+	.proyectImg {
+		display: none;
+	}
+}
+
+@media screen and (max-width: 575px) {
+	#proyect-description {
+		left: 60px;
+		width: 70%;
+	}
+
+	#proyect-description h2 {
+		margin-top: 0px;
+	}
+
+	.proyectImg {
+		display: none;
+	}
+}
 /******************************************************
  Footer
 *******************************************************/
-#divContacto {
+#contact {
 	height: 100%;
 	width: 100%;
 	position: fixed;
@@ -505,13 +560,13 @@ text {
 	background-color: #292935;
 }
 
-#divContacto h2 {
+#contact h2 {
 	text-align: center;
 	padding-top: 50px;
 	padding-bottom: 50px;
 }
 
-#divContacto div.columns:nth-child(2) {
+#contact div.columns:nth-child(2) {
 	padding-top: 50px;
 }
 
